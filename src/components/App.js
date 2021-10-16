@@ -40,7 +40,7 @@ const App = () => {
     //checking for user stored in localStorage
     const asyncUseEffect = async () => {
 
-      console.log("itemImages: ", itemImages);
+      // console.log("itemImages: ", itemImages);
       const localUser = JSON.parse(localStorage.getItem('user'));
       if (!!localUser) {
         setUser(localUser);
@@ -56,7 +56,7 @@ const App = () => {
       } else {
 
         const gottenItems = await getAllItems();
-        console.log('mapping gotten items...');
+        // console.log('mapping gotten items...');
         const promisedResult = gottenItems.map(async item => {
           const newItem = { ...item }
           newItem['image'] = itemImages[item.itemNumber];

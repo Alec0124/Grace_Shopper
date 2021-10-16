@@ -1,12 +1,13 @@
 
 const { client } = require("./client");
 const bcrypt = require('bcrypt');
-const { testFirstRow, insertQueryValuesString } = require("./api");
+const { testFirstRow, insertQueryValuesString, respError } = require("./api");
 
 const createUser = async ({ username, password, email, firstName, 
     lastName, phoneNumber, address, address2, zip, state }) => {
 
     try {
+        console.log('createUser parameters: ', 'username: ', username, "password:", password)
         // const SALT_COUNT = 10;
         const [valuesArray, queryString] = insertQueryValuesString(
             [{
@@ -59,8 +60,9 @@ const createUser = async ({ username, password, email, firstName,
                 value: state,
                 type: "string"
             }],
-            "users"
+            "users" //this is the table name
         );
+        console.log('insert query values string:', valuesArray, queryString)
         const { rows } = await client.query(queryString, valuesArray);
         testFirstRow(rows);
         console.log('finished making user: ', rows);
@@ -82,8 +84,11 @@ const updateUser = async ({ id, admin, firstName, lastName, email, phoneNumber, 
     const verifyValue = (value, type = 'string', name) => {
         if (type === null) { type = 'string' };
         if (typeof (value) === type) {
+            console.log('typeOf ', value, '=== ', type, 'is: true')
             dynamicArray.push(value);
             dynamicArrayNames.push(name);
+        } else {
+            console.log('typeOf ', value, '=== ', type, 'is: false')
         }
     };
     const _ = null;
@@ -100,7 +105,7 @@ const updateUser = async ({ id, admin, firstName, lastName, email, phoneNumber, 
         verifyValue(zip, _, 'zip');
         verifyValue(state, _, 'state');
         if (dynamicArray.length < 1) {
-            throw { name: 'error_noInputValues', message: 'missing input values for database' }
+            throw respError('error_noInputValues', 'missing input values for database');
         }
         queryValuesString = queryValuesString + `${dynamicArrayNames[0]}=$1`;
 
@@ -149,7 +154,7 @@ const loginUser = async ({ username, password }) => {
             delete rows[0].password;
             return rows[0];
         } else {
-            throw { name: 'PASSWORD_FAIL', message: 'Password is incorrect' };
+            throw { name: 'PASSWORD_FAIL', message: 'Password is incorrect', error: 'Password is incorrect' };
         }
 
     }

@@ -49,6 +49,7 @@ function requireUsername(req, res, next) {
 
     if (!req.body.username) {
         next({
+            error: "Missing User Name",
             name: "MissingUserNameError",
             message: "You must provide a valid username."
         });
@@ -149,15 +150,18 @@ apiRouter.get('/health', (req, res, next) => {
 // Create a new user. Require username and password, and hash password before saving user to DB. Require all passwords to be at least 8 characters long.
 // BROKEN
 usersRouter.post('/register', async (req, res, next) => {
-    const { username, password, admin, firstName, lastName, email, phoneNumber, address, address2, zip, state } = req.body;
+    console.log('req body: ', req.body);
+    const { username, password, admin, firstName, lastName, email, phoneNumber, address, address2, zip, state } = req.body.user;
 
     try {
 
         const _user = await getUserByUsername(username);
+        console.log('_user', _user)
 
-        if (_user) {
-            next({ name: 'userExistsError', message: 'A user by that name already exists' });
+        if (!!_user) {
+            next(respError('userExistsError', 'A user by that name already exists'));
         };
+        console.log('before createUser: ', "username: ",)
         const user = await createUser({ username, password, admin, firstName, lastName, email, phoneNumber, address, address2, zip, state });
         const token = jwt.sign({ id: user.id, username }, JWT_SECRET, { expiresIn: '1w' });
         res.send({ message: 'register user success!', user, token });
@@ -192,15 +196,7 @@ usersRouter.post('/login', requireUsername, requirePassword, async (req, res, ne
 
 // GET /api/users (**Admin)
 //returns all users but without passwords
-usersRouter.get('', verifyToken, async (req, res, next) => {
-
-    if (!req.user.admin) {
-        throw {
-            name: 'error_requireAdmin',
-            error: 'must use token of admin user',
-            message: 'must use token of admin user'
-        };
-    };
+usersRouter.get('', async (req, res, next) => {
 
     try {
 
@@ -217,6 +213,7 @@ usersRouter.get('', verifyToken, async (req, res, next) => {
         next();
     }
     catch ({ name, message }) {
+        res.send({name, message});
         next({ name, message })
     }
 

@@ -27,7 +27,7 @@ const getQueryValuesString = (objectsArray, id) => {
     };
   });
   if (dynamicArray.length < 1) {
-    throw { name: 'error_noInputValues', message: 'missing input values for database' }
+    throw respError('error_noInputValues', 'missing input values for database');
   };
   queryValuesString = queryValuesString + `${dynamicArrayNames[0]}=${dynamicArray[0]}`;
   if (dynamicArray.length > 1) {
@@ -107,11 +107,14 @@ const insertQueryValuesString = (objectsArray, tableName) => {
   let dynamicArray = [];
   let dynamicArrayNames = [];
   let queryValuesString = `INSERT INTO  ${tableName}(`;
+  console.log('objectsArray: ', objectsArray)
   objectsArray.forEach(object => {
     if (typeof (object.value) === object.type) {
       dynamicArray.push(object.value);
       dynamicArrayNames.push(object.name);
-    };
+    } else {
+      console.log('failed to push: ', object)
+    }
   });
   if (dynamicArray.length < 1) {
     throw { name: 'error_noInputValues', message: 'missing input values for database' }

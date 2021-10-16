@@ -142,7 +142,7 @@ async function createInitialItems() {
   try {
 
     const itemsToCreate = [
-      { itemNumber: 'ITEM1', description: 'Soaring through the skies above a swirling cloud base, the Power Girl Premium Format Figure measures 25” tall. She poses powerfully here, flexing her muscles in a moment of calm between battles.', name: 'Power Girl, cost: 1.23, price: 350 },
+      { itemNumber: 'ITEM1', description: 'Soaring through the skies above a swirling cloud base, the Power Girl Premium Format Figure measures 25” tall. She poses powerfully here, flexing her muscles in a moment of calm between battles.', name: 'Power Girl, cost: 1.23, price: 350' },
       { itemNumber: 'ITEM2', description: 'Going back to the origins of our favorite superheroes, Hot Toys is bringing The Origins Collection which takes inspiration from the pages of classic Marvel Comics', name: 'Iron Man', cost: 1.23, price: 247 },
       { itemNumber: 'ITEM3', description: 'Famous for his superhuman strength and indestructible shield, Steve Rogers finds himself called into action to complete a mission with the universe’s entire existence on the line.', name: 'Captain America', cost: 1.23, price: 320 },
       { itemNumber: 'ITEM4', description: 'The Superman: The Movie Figure measures 20.5” tall, lovingly crafted in the iconic likeness of actor Christopher Reeve as Superman. His portrait features stunning blue eyes, and the signature kiss curl in his hair.', name: 'Superman', cost: 1.23, price: 417 },
@@ -166,26 +166,26 @@ async function createInitialItems() {
   }
 };
 
-async function createInitialItems() {
-  console.log('Starting to create items...');
-  try {
-    // itemNumber, description, name, cost, price, onHand
-    const itemsToCreate = [
-      { itemNumber: 'ITEM1', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
-      { itemNumber: 'ITEM2', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
-      { itemNumber: 'ITEM3', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
-      { itemNumber: 'ITEM4', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
-      { itemNumber: 'ITEM5', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
-    ]
-    const items = await Promise.all(itemsToCreate.map(createItem));
+// async function createInitialItems() {
+//   console.log('Starting to create items...');
+//   try {
+//     // itemNumber, description, name, cost, price, onHand
+//     const itemsToCreate = [
+//       { itemNumber: 'ITEM1', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
+//       { itemNumber: 'ITEM2', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
+//       { itemNumber: 'ITEM3', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
+//       { itemNumber: 'ITEM4', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
+//       { itemNumber: 'ITEM5', description: 'an item, yay', name: 'my item', cost: 1.00, price: 2.00, onHand: 5 },
+//     ]
+//     const items = await Promise.all(itemsToCreate.map(createItem));
 
-    console.log('items created:');
-    console.log(items);
-  } catch (error) {
-    console.error('Error creating users!');
-    throw error;
-  }
-};
+//     console.log('items created:');
+//     console.log(items);
+//   } catch (error) {
+//     console.error('Error creating users!');
+//     throw error;
+//   }
+// };
 
 async function createInitialOrders() {
   console.log('Starting to create items...');

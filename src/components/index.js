@@ -12,3 +12,4 @@ export { default as Home } from './Home.js';
 export { default as User } from './User.js';
 export { default as Auth } from './Auth.js';
 export { default as ApiDocuments } from './ApiDocuments.js';
+export { default as FormError } from './FormError.js';

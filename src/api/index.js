@@ -1,6 +1,19 @@
 const BASE_URL = 'http://localhost:5000/api';
+
+// *** Functions ***
+
+const respError = async ( name, message ) => {
+    throw {
+        name,
+        message,
+        error: message
+    }
+};
+
+
 //Register a user
 async function fetchRegister(username, password) {
+try {
   return await fetch(`/api/users/register`, {
       method: "POST",
       headers: {
@@ -8,8 +21,8 @@ async function fetchRegister(username, password) {
       },
       body: JSON.stringify({
           user: {
-              username: username,
-              password: password
+              username,
+              password
           }
       })
   })
@@ -18,6 +31,10 @@ async function fetchRegister(username, password) {
           return result;
       })
       .catch(console.error);
+    }
+    catch (error) {
+        throw error;
+    }
 }
 
 
@@ -29,10 +46,8 @@ async function fetchLogin(username, password) {
           'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          user: {
               username: username,
               password: password
-          }
       })
   })
       .then(response => response.json())
@@ -64,11 +79,31 @@ const fetchMyOrders = async (user) => {
           headers: {
               "Content-Type": "application/json",
               "Authorization": "Bearer " + user.token
-          },
+          }
       }
   );
   return await resp.json();
 };
+
+const fetchUsers = async () => {
+    try {
+        console.log('running fetchUsers...');
+        const resp = await fetch(`${BASE_URL}/users`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        console.log(resp);
+        const users = resp.json();
+        if(users===null) {
+            respError("USERS_NULL", "Could not retrieve users")
+        };
+        return users;
+    }
+    catch (error) {
+        throw error;
+    }
+}
 
 const getAllItems = async () => {
     try {
@@ -84,5 +119,8 @@ const getAllItems = async () => {
 module.exports = {
     fetchCatalog,
     fetchRegister,
-    getAllItems
+    getAllItems,
+    respError,
+    fetchUsers,
+    fetchLogin
 };

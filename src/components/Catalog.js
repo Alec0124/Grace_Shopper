@@ -133,12 +133,13 @@ const Catalog = ({ allItems, itemImages, setCart, cart }) => {
                                         <div>
                                             <FormControl className={classes.formControl}>
                                                 <InputLabel htmlFor="grouped-native-select">Select a Category</InputLabel>
-                                                <Select native defaultValue="" id="grouped-native-select">
+                                                <Select native defaultValue={1} id="grouped-native-select">
                                                     <option aria-label="None" value="" />
-                                                    <option value={1}>DC</option>
-                                                    <option value={2}>Marvel</option>
-                                                    <option value={3}>Iron Studios</option>
-                                                    <option value={4}>Hot Toys</option>
+                                                    <option value={1}>Featured</option>
+                                                    <option value={2}>DC</option>
+                                                    <option value={3}>Marvel</option>
+                                                    <option value={4}>Iron Studios</option>
+                                                    <option value={5}>Hot Toys</option>
                                                 </Select>
                                             </FormControl>
                                         </div>
